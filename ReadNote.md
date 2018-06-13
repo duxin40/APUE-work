@@ -642,11 +642,6 @@ int pthread_mutex_unlock(pthread_mutex_t *mutex);
 include <pthread.h>
 include <time.h>
 int pthread_mutex_timedlock(pthread_mutex_t *restrict mutex,const struct timespec *restrict tsptr);
-下面给出如何用pthread_mutex_timedlock避免永久阻塞
-
- View Code
-这个程序对已有的互斥量加锁，演示了pthread_mutex_timedlock是如何工作的。
-
 
 读写锁
 
@@ -677,7 +672,6 @@ include <pthread.h>
 int pthread_rwlock_tryrdlock(pthread_rwlock_t *rwlock);
 int pthread_rwlock_tryrwrock(pthread_rwlock_t *rwlock);
  
-
 带有超时的读写锁
 
 与互斥量一样，有两个带有超时的速写锁加锁函数
@@ -686,8 +680,6 @@ include <pthread.h>
 include <time.h>
 int pthread_rwlock_timedrdlock(pthread_rwlock_t *restrict rwlock,const struct timespec *restrict tsptr);
 int pthread_rwlock_timedwrlock(pthread_rwlock_t *restrict rwlock,const struct timespec *restrict tsptr);
- 
-
 
 条件变量
 
@@ -722,7 +714,6 @@ phread_cond_signal函数至少能唤醒一个等待该条件的线程，而pthre
 
 自旋锁的接口与互斥量的接口类似，提供了以下的5个函数。
 
-复制代码
 include <pthread.h>
 int pthread_spin_init(pthread_spinlock_t *lock,int pshared);
 int pthread_spin_destroy(pthread_spinlock_t *lock);
@@ -736,7 +727,7 @@ int pthread_spin_unlock(pthread_spinlock_t *lock);
 
 可以使用下面函数对屏障进行初始化跟反初始化
 
-#include <pthread.h>
+include <pthread.h>
 int pthread_barrier_init(pthread_barrier_t *restrict barrier,const pthread_barrierattr_t *restrict attr,unsigned int count);
 int pthread_barrier_destroy(pthread_barrier_t *barrier);
 count参数可以用来指定在允许所有线程继续运行之前，必须到达屏障的线程数目。
@@ -748,9 +739,3 @@ int pthread_barrier_wait(pthread_barrier_t *barrier);
 调用pthread_barrier_wait的线程在屏障计数（调用pthread_barrier_init时设定）未满足条件时，会进入休眠状态。
 
 如果该线程是最后一个调用pthread_barrier_wait的线程，就满足了屏障计数，所有的线程都被唤醒。
-
-下面给出在一个任务上合作的多个线程之间如何用屏障进行同步
-
- View Code
-在这个实例中，使用8个线程分解了800万个数的排序工作。每个线程用堆排序算法对100万个数进行排序，然后主线程调用一个函数对这些结果进行合并。
-
