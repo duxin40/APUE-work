@@ -42,8 +42,6 @@ UNIX文件系统是目录和文件的一种层次结构，所有东西的起点�
 
 不难列出一个目录中所有文件的名字，下面是ls(1)命令的简要实现。
 
-其中apue.h可以通过网上下载，http://blog.csdn.net/istruth/article/details/44201827有下载地址和使用的方法，后面章节会详细的给出下列函数的用法。
-
 include "apue.h"
 include <dirent.h>
 
